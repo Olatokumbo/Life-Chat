@@ -13,14 +13,14 @@ const Sidebar = () => {
       <div className={style.sidebar_header}>
         <Avatar />
         <div className={style.sidebar_headerRight}>
-          <IconButton>
-            <DonutLargeIcon />
+          <IconButton >
+            <DonutLargeIcon style={{fontSize: '20px'}} />
           </IconButton>
           <IconButton>
-            <ChatIcon />
+            <ChatIcon style={{fontSize: '20px'}}/>
           </IconButton>
           <IconButton>
-            <MoreVertIcon />
+            <MoreVertIcon style={{fontSize: '20px'}}/>
           </IconButton>
         </div>
       </div>

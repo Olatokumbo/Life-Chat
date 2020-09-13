@@ -6,7 +6,7 @@ const SidebarRoom = () => {
     <div className={style.sidebarRoom}>
       <Avatar />
       <div className={style.sidebarRoom_info}>
-      <Typography variant="h6">Room name</Typography>
+      <Typography variant="h6" color="textSecondary">Room name</Typography>
       <Typography variant="body2">Last message...</Typography>
       </div>
     </div>
