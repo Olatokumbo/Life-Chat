@@ -1,12 +1,12 @@
-import React, {useState} from "react";
+import React from "react";
 import style from "./App.module.css";
 import Sidebar from "./components/Sidebar/Sidebar";
 import Room from "./components/Room/Room";
 import Login from "./components/Login/Login";
+import {connect} from "react-redux";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-const App = () => {
-  const [user, setUser] = useState(null);
-  if(!user){
+const App = ({uid}) => {
+  if(!uid){
     return <Login/>
   }
   return (
@@ -23,4 +23,9 @@ const App = () => {
   );
 };
 
-export default App;
+const mapStateToProps = (state)=>{
+  return{
+    uid: state.auth.uid
+  }
+}
+export default connect(mapStateToProps)(App);
