@@ -5,6 +5,7 @@ import InfoIcon from "@material-ui/icons/Info";
 import InsertEmoticonIcon from "@material-ui/icons/InsertEmoticon";
 import SendIcon from "@material-ui/icons/Send";
 import MicIcon from "@material-ui/icons/Mic";
+import Chat from "../Chat/Chat";
 import style from "./Room.module.css";
 function Room() {
   return (
@@ -16,7 +17,9 @@ function Room() {
             <Typography variant="body1" className={style.room_headerName}>
               David King
             </Typography>
-            <Typography variant="body2" color="textSecondary">Last Seen: 21:30</Typography>
+            <Typography variant="body2" color="textSecondary">
+              Last Seen: 21:30
+            </Typography>
           </div>
         </div>
         <div className={style.room_headerRight}>
@@ -28,7 +31,9 @@ function Room() {
           </IconButton>
         </div>
       </div>
-      <div className={style.room_body}></div>
+      <div className={style.room_body}>
+        <Chat /><Chat /><Chat /><Chat /><Chat /><Chat /><Chat /><Chat /><Chat /><Chat /><Chat /><Chat /><Chat /><Chat />
+      </div>
       <div className={style.room_footer}>
         <IconButton>
           <InsertEmoticonIcon className={style.footer_icon} />
