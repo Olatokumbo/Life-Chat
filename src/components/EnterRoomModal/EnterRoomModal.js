@@ -1,5 +1,7 @@
 import React, {useState} from "react";
-import { Modal, Fade, makeStyles, Backdrop, TextField, Button, paper, Typography} from "@material-ui/core";
+import { Modal, Fade, makeStyles, Backdrop, TextField, Button, Typography} from "@material-ui/core";
+import {connect} from "react-redux";
+import * as actionCreator from "../../store/actions";
 import style from "./EnterRoomModal.module.css";
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -16,11 +18,18 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-const EnterRoomModal = ({createRm, closeCreateRoom})=>{
+const EnterRoomModal = ({createRm, closeCreateRoom, createRoom})=>{
     const classes = useStyles();
+    const [name, setName] = useState("");
+    const [password, setPassword] = useState("");
       const handleClose = () => {
         closeCreateRoom(true)
       };
+
+    const createRoomClick = ()=>{
+        createRoom(name, password);
+        handleClose();
+    }
     return(
         <Modal
         aria-labelledby="transition-modal-title"
@@ -39,22 +48,25 @@ const EnterRoomModal = ({createRm, closeCreateRoom})=>{
             <div className={style.container}>
               <Typography align="center">Create Room</Typography>
               <TextField
+              autoFocus={true}
                 variant="outlined"
                 label="Name"
                 size="small"
                 className={style.input}
+                onChange={(e)=>setName(e.target.value)}
               />
               <TextField
                 type="password"
-                autoFocus={true}
                 variant="outlined"
                 label="Password"
                 size="small"
                 className={style.input}
+                onChange={(e)=>setPassword(e.target.value)}
               />
               <Button
                 variant="contained"
                 color="primary"
+                onClick={createRoomClick}
               >
                 Create
               </Button>
@@ -72,4 +84,10 @@ const EnterRoomModal = ({createRm, closeCreateRoom})=>{
       </Modal>
     )
 }
-export default EnterRoomModal
+
+const mapDispatchToProps = (dispatch)=>{
+    return{
+        createRoom: (name, password)=>dispatch(actionCreator.createRoom(name, password))
+    }
+}
+export default connect(null, mapDispatchToProps)(EnterRoomModal);

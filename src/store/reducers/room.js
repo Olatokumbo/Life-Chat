@@ -15,4 +15,4 @@ const roomReducer = (state = initialState, action) =>{
     }
 }
 
-export const roomReducer;
+export default roomReducer;
