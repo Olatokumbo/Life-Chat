@@ -19,9 +19,32 @@ exports.createUser = functions.auth.user()
     return addUser(userProfile);
 })
 
-
 const addUser = (userInfo)=>{
     return admin.firestore().collection("users")
     .add(userInfo)
     .then(doc => console.log("User Profile has been created", doc) )
+// }
+
+// exports.createRoom = functions.firestore
+// .document("rooms/{roomId}")
+// .onCreate((snap, context)=>{
+//     const roomId = context.params.roomId
+//     return admin.firestore()
+//     .collection("rooms")
+//     .doc(roomId)
+//     .collection("users")
+//     .doc(getUserUid)
+//     .add({
+//         timeJoined:admin.firestore.FieldValue.serverTimestamp()
+//     })
+// })
+
+// const getUserUid = ()=>{
+//     return admin.auth().verifyIdToken(idToken)
+//     .then(function(decodedToken) {
+//       var uid = decodedToken.uid;
+//       return uid
+//     }).catch(function(e) {
+//       return console.log(e)
+//     });
 }

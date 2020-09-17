@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { Avatar, IconButton,Menu, MenuItem } from "@material-ui/core";
 import DonutLargeIcon from "@material-ui/icons/DonutLarge";
 import ChatIcon from "@material-ui/icons/Chat";
@@ -10,7 +10,7 @@ import {connect} from "react-redux";
 import * as actionCreator from "../../store/actions";
 import style from "./Sidebar.module.css";
 
-const Sidebar = ({startLogout}) => {
+const Sidebar = ({startLogout, getRooms, rooms}) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [createRm, setCreateRm] = useState(false);
   const handleClick = (event) => {
@@ -28,6 +28,10 @@ const Sidebar = ({startLogout}) => {
   const logout = ()=>{
     startLogout()
   }
+
+  useEffect(()=>{
+    getRooms()
+  }, [getRooms])
   return (
     <div className={style.sidebar}>
       <div className={style.sidebar_header}>
@@ -51,13 +55,9 @@ const Sidebar = ({startLogout}) => {
         </div>
       </div>
       <div className={style.sidebar_rooms}>
-        <SidebarRoom/>
-        <SidebarRoom/>
-        <SidebarRoom/>
-        <SidebarRoom/>
-        <SidebarRoom/>
-        <SidebarRoom/>
-        <SidebarRoom/>
+      {rooms && rooms.map((doc)=>(
+        <SidebarRoom key={doc.id} name={doc.name}/>
+      ))}
       </div>
       <EnterRoomModal createRm={createRm} closeCreateRoom={closeCreateRoom}/>
       <Menu
@@ -75,10 +75,17 @@ const Sidebar = ({startLogout}) => {
   );
 };
 
-const mapDispatchToProps = (dispatch) =>{
+const mapStateToProps = (state)=>{
   return{
-    startLogout: ()=> dispatch(actionCreator.startSignout())
+    rooms: state.room.rooms,
   }
 }
 
-export default connect(null, mapDispatchToProps)(Sidebar);
+const mapDispatchToProps = (dispatch) =>{
+  return{
+    startLogout: ()=> dispatch(actionCreator.startSignout()),
+    getRooms: ()=> dispatch(actionCreator.getRooms())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);
