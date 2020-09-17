@@ -1,24 +1,30 @@
-import React from "react";
+import React, {useState} from "react";
 import { Avatar, IconButton,Menu, MenuItem } from "@material-ui/core";
 import DonutLargeIcon from "@material-ui/icons/DonutLarge";
 import ChatIcon from "@material-ui/icons/Chat";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import SearchOutlinedIcon from "@material-ui/icons/SearchOutlined";
 import SidebarRoom from "../SidebarRoom/SidebarRoom";
+import EnterRoomModal from "../EnterRoomModal/EnterRoomModal";
 import {connect} from "react-redux";
 import * as actionCreator from "../../store/actions";
 import style from "./Sidebar.module.css";
 
 const Sidebar = ({startLogout}) => {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [createRm, setCreateRm] = useState(false);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const openCreateRoom = ()=>{
+    setCreateRm(true);
+  }
+  const closeCreateRoom =(value)=>{
+    setCreateRm(!value);
+  }
   const logout = ()=>{
     startLogout()
   }
@@ -27,7 +33,7 @@ const Sidebar = ({startLogout}) => {
       <div className={style.sidebar_header}>
         <Avatar />
         <div className={style.sidebar_headerRight}>
-          <IconButton >
+          <IconButton onClick={openCreateRoom}>
             <DonutLargeIcon style={{fontSize: '20px'}} />
           </IconButton>
           <IconButton>
@@ -53,7 +59,7 @@ const Sidebar = ({startLogout}) => {
         <SidebarRoom/>
         <SidebarRoom/>
       </div>
-
+      <EnterRoomModal createRm={createRm} closeCreateRoom={closeCreateRoom}/>
       <Menu
         id="simple-menu"
         anchorEl={anchorEl}
