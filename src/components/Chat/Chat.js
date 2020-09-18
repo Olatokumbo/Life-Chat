@@ -1,14 +1,22 @@
 import React from "react";
 import { Typography } from "@material-ui/core";
 import style from "./Chat.module.css";
-function Chat() {
+import moment from "moment";
+import {connect} from "react-redux";
+function Chat({data, uid}) {
   return (
-    <div className={style.chat}>
-        <Typography className={style.chat_message}>Hi Guys!!!  ouuuyuyuyuyuy ouyuuuyyuyuyyufyufytfytfyutfyu fytfytfyutfyutfytfyutfyutfytfytfyutfyutfytfyutfyutfyutfyutfuytfyutfyutfyutfyutfytfyutfyutfyutfyutfyutfyutfyutfyfytfyutfuytfuyft</Typography>
+    <div className={(uid===data.uid)? style.chat: style.chat_receiver}>
+        <Typography className={style.chat_message}>{data.message}</Typography>
         <Typography className={style.chat_name}>David King</Typography>
-        <Typography className={style.chat_timestamp}>9:30pm</Typography>
+        <Typography className={style.chat_timestamp}>{moment(data.timestamp?.toDate()).calendar()}</Typography>
     </div>
   );
 }
 
-export default Chat;
+
+const mapStateToProps = (state)=>{
+  return{
+    uid: state.auth.uid
+  }
+}
+export default connect(mapStateToProps)(Chat);

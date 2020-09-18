@@ -7,3 +7,7 @@ export const SIGNOUT_FAILED = "SIGNOUT_FAILED";
 //Room
 export const CREATE_ROOM ="CREATE_ROOM";
 export const GET_ROOMS = "GET_ROOMS";
+
+// Chat
+export const POST_CHAT = "POST_CHAT";
+export const GET_CHATS = "GET_CHATS";
