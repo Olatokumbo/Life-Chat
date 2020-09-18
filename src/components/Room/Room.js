@@ -8,11 +8,14 @@ import MicIcon from "@material-ui/icons/Mic";
 import Chat from "../Chat/Chat";
 import * as actionCreator from "../../store/actions";
 import { connect } from "react-redux";
+import moment from "moment";
 import style from "./Room.module.css";
 function Room({
   getMessages,
   sendMessage,
   messages,
+  getRoomInfo,
+  roomInfo,
   uid,
   match: {
     params: { roomId },
@@ -20,8 +23,9 @@ function Room({
 }) {
   const [message, setMessage] = useState("");
   useEffect(() => {
-    getMessages(roomId)
-  }, [getMessages, roomId]);
+    getMessages(roomId);
+    getRoomInfo(roomId);
+  }, [getMessages, roomId, getRoomInfo]);
 
   const sendMessageForm = (e) =>{
     e.preventDefault();
@@ -35,10 +39,10 @@ function Room({
           <Avatar />
           <div className={style.room_headerInfo}>
             <Typography variant="body1" className={style.room_headerName}>
-              David King
+              {roomInfo?.name}
             </Typography>
             <Typography variant="body2" color="textSecondary">
-              Last Seen: 21:30
+              Created at { (roomInfo?.dateCreated) ? moment(roomInfo.dateCreated.toDate()).format('dddd MMMM D YYYY') : "Loading..."}
             </Typography>
           </div>
         </div>
@@ -76,13 +80,15 @@ const mapStateToProps = (state) => {
   return {
     uid: state.auth.uid,
     messages: state.message.messages,
+    roomInfo: state.room.roomInfo
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     getMessages: (roomId) => dispatch(actionCreator.getMessages(roomId)),
-    sendMessage: (uid, roomId, message) => dispatch(actionCreator.sendMessage(uid, roomId, message))
+    sendMessage: (uid, roomId, message) => dispatch(actionCreator.sendMessage(uid, roomId, message)),
+    getRoomInfo: (roomId) => dispatch(actionCreator.getRoomInfo(roomId))
   };
 };
 

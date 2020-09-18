@@ -43,3 +43,16 @@ export const getRooms = () => {
     rooms = [];
   };
 };
+
+
+export const getRoomInfo = (roomId) =>{
+  return (dispatch)=>{
+    firestore
+    .collection("rooms")
+    .doc(roomId)
+    .get()
+    .then((doc)=>{
+      dispatch({type: actionTypes.GET_ROOM_INFO, roomInfo: doc.data()})
+    })
+  }
+}

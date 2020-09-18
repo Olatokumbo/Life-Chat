@@ -57,7 +57,7 @@ const Sidebar = ({startLogout, getRooms, rooms}) => {
       </div>
       <div className={style.sidebar_rooms}>
       {rooms && rooms.map((doc)=>(
-        <Link to={`/room/${doc.id}`}><SidebarRoom key={doc.id} name={doc.name}/></Link>
+        <Link key={doc.id} to={`/room/${doc.id}`}><SidebarRoom name={doc.name}/></Link>
       ))}
       </div>
       <EnterRoomModal createRm={createRm} closeCreateRoom={closeCreateRoom}/>

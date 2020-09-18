@@ -1,6 +1,7 @@
 import * as actionTypes from "../actions/actionTypes";
 const initialState = {
   uid: null,
+  displayName: null,
   message: null,
 };
 
@@ -10,6 +11,7 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         uid: action.uid,
+        displayName: action.displayName,
         message: null,
       };
     case actionTypes.SIGNIN_FAILED:
@@ -21,6 +23,7 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         uid: null,
+        displayName: null,
         message: null,
       };
     case actionTypes.SIGNOUT_FAILED:

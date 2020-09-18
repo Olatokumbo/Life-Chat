@@ -26,7 +26,7 @@ auth.onAuthStateChanged((user)=>{
     ReactDOM.render(<Provider store={store}><App/></Provider>, document.getElementById("root"));
     if(user){
         console.log("LOGGED IN");
-        store.dispatch({type: actionTypes.SIGNIN_SUCCESS, uid: user.uid})
+        store.dispatch({type: actionTypes.SIGNIN_SUCCESS, uid: user.uid, displayName: user.displayName})
     }
     else{
         console.log("LOGGED OUT");
