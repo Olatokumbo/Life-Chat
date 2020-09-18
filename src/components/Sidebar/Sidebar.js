@@ -7,6 +7,7 @@ import SearchOutlinedIcon from "@material-ui/icons/SearchOutlined";
 import SidebarRoom from "../SidebarRoom/SidebarRoom";
 import EnterRoomModal from "../EnterRoomModal/EnterRoomModal";
 import {connect} from "react-redux";
+import {Link} from "react-router-dom"; 
 import * as actionCreator from "../../store/actions";
 import style from "./Sidebar.module.css";
 
@@ -56,7 +57,7 @@ const Sidebar = ({startLogout, getRooms, rooms}) => {
       </div>
       <div className={style.sidebar_rooms}>
       {rooms && rooms.map((doc)=>(
-        <SidebarRoom key={doc.id} name={doc.name}/>
+        <Link to={`/room/${doc.id}`}><SidebarRoom key={doc.id} name={doc.name}/></Link>
       ))}
       </div>
       <EnterRoomModal createRm={createRm} closeCreateRoom={closeCreateRoom}/>

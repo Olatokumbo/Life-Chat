@@ -1,31 +1,31 @@
 import React from "react";
 import style from "./App.module.css";
-import Sidebar from "./components/Sidebar/Sidebar";
 import Room from "./components/Room/Room";
 import Login from "./components/Login/Login";
-import {connect} from "react-redux";
+import Home from "./pages/Home/Home";
+import PrivateRoute from "./hoc/PrivateRoute";
+import PublicRoute from "./hoc/PublicRoute";
+import { connect } from "react-redux";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-const App = ({uid}) => {
-  if(!uid){
-    return <Login/>
+const App = ({ uid }) => {
+  if (!uid) {
+    return <Login />;
   }
   return (
-    <div className={style.app}>
-      <div className={style.app_body}>
-        <Sidebar />
-        <Router>
-          <Switch>
-            <Route to="/rooms/:roomId" component={Room} />
-          </Switch>
-        </Router>
-      </div>
-    </div>
+    <Router>
+      <Switch>
+        <PublicRoute exact path="/" component={Login} />
+        <PrivateRoute path="/home" component={Home} />
+        <PrivateRoute path="/room/:roomId" component={Room} />
+        <Route render={() => <h1>Page Not Found</h1>} />
+      </Switch>
+    </Router>
   );
 };
 
-const mapStateToProps = (state)=>{
-  return{
-    uid: state.auth.uid
-  }
-}
+const mapStateToProps = (state) => {
+  return {
+    uid: state.auth.uid,
+  };
+};
 export default connect(mapStateToProps)(App);
