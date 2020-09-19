@@ -6,11 +6,6 @@ const initialState = {
 
 const roomReducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.CREATE_ROOM:
-      return {
-        ...state,
-        rooms: state.rooms.concat(action.room),
-      };
     case actionTypes.GET_ROOMS:
       return {
         ...state,

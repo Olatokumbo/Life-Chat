@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import { Modal, Fade, makeStyles, Backdrop, TextField, Button, Typography} from "@material-ui/core";
 import {connect} from "react-redux";
 import * as actionCreator from "../../store/actions";
-import style from "./EnterRoomModal.module.css";
+import style from "./CreateRoomModal.module.css";
 const useStyles = makeStyles((theme) => ({
     modal: {
       display: "flex",
@@ -18,16 +18,16 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-const EnterRoomModal = ({enterRm, closeEnterRoom, enterRoom, uid})=>{
+const CreateRoomModal = ({createRm, closeCreateRoom, createRoom})=>{
     const classes = useStyles();
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
       const handleClose = () => {
-        closeEnterRoom(true)
+        closeCreateRoom(true)
       };
 
-    const enterRoomClick = ()=>{
-        enterRoom(uid, name, password);
+    const createRoomClick = ()=>{
+        createRoom(name, password);
         handleClose();
     }
     return(
@@ -35,7 +35,7 @@ const EnterRoomModal = ({enterRm, closeEnterRoom, enterRoom, uid})=>{
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         className={classes.modal}
-        open={enterRm}
+        open={createRm}
         onClose={handleClose}
         closeAfterTransition
         BackdropComponent={Backdrop}
@@ -43,10 +43,10 @@ const EnterRoomModal = ({enterRm, closeEnterRoom, enterRoom, uid})=>{
           timeout: 500,
         }}
       >
-        <Fade in={enterRm}>
+        <Fade in={createRm}>
           <div className={classes.paper}>
             <div className={style.container}>
-              <Typography align="center">Enter Room</Typography>
+              <Typography align="center">Create Room</Typography>
               <TextField
               autoFocus={true}
                 variant="outlined"
@@ -66,9 +66,9 @@ const EnterRoomModal = ({enterRm, closeEnterRoom, enterRoom, uid})=>{
               <Button
                 variant="contained"
                 color="primary"
-                onClick={enterRoomClick}
+                onClick={createRoomClick}
               >
-                Enter
+                Create
               </Button>
               <Button
                 variant="contained"
@@ -85,15 +85,9 @@ const EnterRoomModal = ({enterRm, closeEnterRoom, enterRoom, uid})=>{
     )
 }
 
-const mapStateToProps = (state) =>{
-    return{
-        uid: state.auth.uid
-    }
-}
-
 const mapDispatchToProps = (dispatch)=>{
     return{
-        enterRoom: (uid, name, password)=>dispatch(actionCreator.enterRoom(uid, name, password))
+        createRoom: (name, password)=>dispatch(actionCreator.createRoom(name, password))
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(EnterRoomModal);
+export default connect(null, mapDispatchToProps)(CreateRoomModal);

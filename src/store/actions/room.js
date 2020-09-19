@@ -1,7 +1,7 @@
 import firebase, { firestore } from "../../firebase/firebase";
 import * as actionTypes from "./actionTypes";
 export const createRoom = (name, password) => {
-  return (dispatch) => {
+  return () => {
     const admin = firebase.auth().currentUser.uid;
     firestore
       .collection("rooms")
@@ -13,9 +13,8 @@ export const createRoom = (name, password) => {
         dateCreated: firebase.firestore.FieldValue.serverTimestamp(),
       })
       .then((doc) => {
-        console.log(doc)
+        console.log(doc);
         console.log("Room has been Created");
-        dispatch({type: actionTypes.CREATE_ROOM, room: {id: doc.id, name, password, admin}})
       })
       .catch((e) => {
         console.log(e.message);
@@ -30,29 +29,59 @@ export const getRooms = () => {
     firestore
       .collection("rooms")
       .where("users", "array-contains", uid)
-      .get()
-      .then((snapshot) => {
+      .onSnapshot((snapshot) => {
+        console.log(snapshot);
         snapshot.forEach((doc) => {
           rooms.push({ ...{ id: doc.id, ...doc.data() } });
         });
-      })
-      .then(() => {
-        dispatch({type: actionTypes.GET_ROOMS, rooms})
-        console.log(rooms);
+        dispatch({ type: actionTypes.GET_ROOMS, rooms });
+        // console.log(rooms);
+        rooms = [];
       });
-    rooms = [];
   };
 };
 
-
-export const getRoomInfo = (roomId) =>{
-  return (dispatch)=>{
+export const getRoomInfo = (roomId) => {
+  return (dispatch) => {
     firestore
-    .collection("rooms")
-    .doc(roomId)
-    .get()
-    .then((doc)=>{
-      dispatch({type: actionTypes.GET_ROOM_INFO, roomInfo: doc.data()})
-    })
-  }
-}
+      .collection("rooms")
+      .doc(roomId)
+      .get()
+      .then((doc) => {
+        dispatch({ type: actionTypes.GET_ROOM_INFO, roomInfo: doc.data() });
+      });
+  };
+};
+
+export const enterRoom = (uid, name, password) => {
+  return () => {
+    firestore
+      .collection("rooms")
+      .where("name", "==", name)
+      .where("password", "==", password)
+      .get()
+      .then((snapshot) => {
+        const thing = snapshot.docs[0];
+        thing.ref.update({
+          users: firebase.firestore.FieldValue.arrayUnion(uid),
+        });
+      })
+      .then(() => {
+        console.log("Entered a Room");
+      })
+      .catch((e) => {
+        console.log(e.message);
+      });
+  };
+};
+
+// firestore
+// .collection("rooms")
+// .doc(roomId)
+// .update({
+//   users:  firebase.firestore.FieldValue.arrayUnion(uid)
+// }).then(()=>{
+//   console.log("A user has joined the chat")
+// }).catch((e)=>{
+//   console.log(e.message)
+// })

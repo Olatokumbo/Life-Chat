@@ -1,5 +1,6 @@
 import React from "react";
 import { Typography, Avatar } from "@material-ui/core";
+import {connect} from "react-redux";
 import style from "./SidebarRoom.module.css";
 const SidebarRoom = ({name}) => {
   return (
@@ -13,4 +14,17 @@ const SidebarRoom = ({name}) => {
   );
 };
 
-export default SidebarRoom;
+
+// Work on this one!
+const mapStateToProps = (state) => {
+  return {
+    uid: state.auth.uid,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(SidebarRoom);

@@ -18,7 +18,7 @@ export const getMessages = (roomId) =>{
     }
 }
 
-export const sendMessage = (uid, roomId, message) =>{
+export const sendMessage = (uid, displayName, roomId, message) =>{
     return ()=>{
         firestore
         .collection("rooms")
@@ -26,6 +26,7 @@ export const sendMessage = (uid, roomId, message) =>{
         .collection("messages")
         .add({
             authorId: uid,
+            displayName,
             message,
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
         }).then(()=>{

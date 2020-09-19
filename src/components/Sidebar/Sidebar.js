@@ -5,6 +5,7 @@ import ChatIcon from "@material-ui/icons/Chat";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import SearchOutlinedIcon from "@material-ui/icons/SearchOutlined";
 import SidebarRoom from "../SidebarRoom/SidebarRoom";
+import CreateRoomModal from "../CreateRoomModal/CreateRoomModal";
 import EnterRoomModal from "../EnterRoomModal/EnterRoomModal";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom"; 
@@ -14,6 +15,7 @@ import style from "./Sidebar.module.css";
 const Sidebar = ({startLogout, getRooms, rooms}) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [createRm, setCreateRm] = useState(false);
+  const [enterRm, setEnterRm] = useState(false);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -25,6 +27,13 @@ const Sidebar = ({startLogout, getRooms, rooms}) => {
   }
   const closeCreateRoom =(value)=>{
     setCreateRm(!value);
+  }
+
+  const openEnterRoom = ()=>{
+    setEnterRm(true);
+  }
+  const closeEnterRoom =(value)=>{
+    setEnterRm(!value);
   }
   const logout = ()=>{
     startLogout()
@@ -41,7 +50,7 @@ const Sidebar = ({startLogout, getRooms, rooms}) => {
           <IconButton onClick={openCreateRoom}>
             <DonutLargeIcon style={{fontSize: '20px'}} />
           </IconButton>
-          <IconButton>
+          <IconButton onClick={openEnterRoom}>
             <ChatIcon style={{fontSize: '20px'}}/>
           </IconButton>
           <IconButton onClick={handleClick}>
@@ -60,7 +69,8 @@ const Sidebar = ({startLogout, getRooms, rooms}) => {
         <Link key={doc.id} to={`/room/${doc.id}`}><SidebarRoom name={doc.name}/></Link>
       ))}
       </div>
-      <EnterRoomModal createRm={createRm} closeCreateRoom={closeCreateRoom}/>
+      <CreateRoomModal createRm={createRm} closeCreateRoom={closeCreateRoom}/>
+      <EnterRoomModal enterRm={enterRm} closeEnterRoom={closeEnterRoom}/>
       <Menu
         id="simple-menu"
         anchorEl={anchorEl}

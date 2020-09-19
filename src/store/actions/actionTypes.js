@@ -5,7 +5,6 @@ export const SIGNOUT_SUCCESS = "SIGNOUT_SUCCESS";
 export const SIGNOUT_FAILED = "SIGNOUT_FAILED";
 
 //Room
-export const CREATE_ROOM ="CREATE_ROOM";
 export const GET_ROOMS = "GET_ROOMS";
 export const GET_ROOM_INFO = "GET_ROOM_INFO";
 

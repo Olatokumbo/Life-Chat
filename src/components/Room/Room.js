@@ -16,6 +16,7 @@ function Room({
   messages,
   getRoomInfo,
   roomInfo,
+  displayName,
   uid,
   match: {
     params: { roomId },
@@ -29,7 +30,7 @@ function Room({
 
   const sendMessageForm = (e) =>{
     e.preventDefault();
-    sendMessage(uid, roomId, message);
+    sendMessage(uid, displayName, roomId, message);
     setMessage("");
   }
   return (
@@ -79,6 +80,7 @@ function Room({
 const mapStateToProps = (state) => {
   return {
     uid: state.auth.uid,
+    displayName: state.auth.displayName,
     messages: state.message.messages,
     roomInfo: state.room.roomInfo
   };
@@ -87,7 +89,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getMessages: (roomId) => dispatch(actionCreator.getMessages(roomId)),
-    sendMessage: (uid, roomId, message) => dispatch(actionCreator.sendMessage(uid, roomId, message)),
+    sendMessage: (uid, displayName, roomId, message) => dispatch(actionCreator.sendMessage(uid, displayName, roomId, message)),
     getRoomInfo: (roomId) => dispatch(actionCreator.getRoomInfo(roomId))
   };
 };

@@ -5,9 +5,9 @@ import moment from "moment";
 import {connect} from "react-redux";
 function Chat({data, uid}) {
   return (
-    <div className={(uid===data.uid)? style.chat: style.chat_receiver}>
+    <div className={(uid!==data.authorId)? style.chat: style.chat_receiver}>
         <Typography className={style.chat_message}>{data.message}</Typography>
-        <Typography className={style.chat_name}>David King</Typography>
+        <Typography className={style.chat_name}>{data.displayName}</Typography>
         <Typography className={style.chat_timestamp}>{moment(data.timestamp?.toDate()).calendar()}</Typography>
     </div>
   );
