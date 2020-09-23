@@ -8,9 +8,6 @@ import PublicRoute from "./hoc/PublicRoute";
 import { connect } from "react-redux";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 const App = ({ uid }) => {
-  if (!uid) {
-    return <Login />;
-  }
   return (
     <Router>
       <Switch>

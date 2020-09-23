@@ -15,7 +15,16 @@
     background-color: #68ae96;
     border-top-left-radius: 5px ;
 }
+.profile{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
 
+.profile p{
+    color:#525252 !important;
+    margin-left: 1rem !important;
+}
 .sidebar_headerRight{
     display: flex;
     justify-content: space-between;
